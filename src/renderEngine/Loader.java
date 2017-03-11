@@ -51,7 +51,7 @@ public class Loader {
         return buffer;
     }
 
-    private void cleanUp(){
+    public void cleanUp(){
         for(int vao:vaos){
             GL30.glDeleteVertexArrays(vao);
         }for(int vbo:vbos){
