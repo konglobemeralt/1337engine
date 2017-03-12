@@ -1,4 +1,4 @@
-package renderEngine;
+package models;
 
 /**
  * Created by Jesper on 2017-03-11.

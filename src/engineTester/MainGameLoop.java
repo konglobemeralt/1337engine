@@ -1,8 +1,11 @@
 package engineTester;
 
+import models.RawModel;
+import models.TexturedModel;
 import org.lwjgl.opengl.Display;
 import renderEngine.*;
 import shaders.StaticShader;
+import textures.ModelTexture;
 
 /**
  * Created by Jesper on 2017-03-10.
@@ -30,13 +33,14 @@ public class MainGameLoop {
         };
 
         RawModel model = loader.loadToVAO(vertices, indices);
-
+        ModelTexture texture = new ModelTexture(loader.loadTexture("fotominen"));
+        TexturedModel texturedModel = new TexturedModel(model, texture);
 
         while(!Display.isCloseRequested()){
             renderer.prepare();
             //Game logic
             shader.start();
-            renderer.render(model);
+            renderer.render(texturedModel);
             shader.stop();
             DisplayManager.updateDisplay();
         }
