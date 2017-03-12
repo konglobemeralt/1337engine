@@ -32,8 +32,15 @@ public class MainGameLoop {
                 3,1,2
         };
 
-        RawModel model = loader.loadToVAO(vertices, indices);
-        ModelTexture texture = new ModelTexture(loader.loadTexture("fotominen"));
+        float[] textureCoords = {
+                0,0,
+                0,1,
+                1,1,
+                1,0
+        };
+
+        RawModel model = loader.loadToVAO(vertices, textureCoords, indices);
+        ModelTexture texture = new ModelTexture(loader.loadTexture("floor"));
         TexturedModel texturedModel = new TexturedModel(model, texture);
 
         while(!Display.isCloseRequested()){
