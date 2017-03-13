@@ -25,7 +25,6 @@ public class DisplayManager {
         catch(LWJGLException e){
             e.printStackTrace();
         }
-
         GL11.glViewport(0, 0, WIDTH, HEIGHT);
     }
 
@@ -36,7 +35,6 @@ public class DisplayManager {
         
 
     public static void closeDisplay(){
-
         Display.destroy();
     }
 }
