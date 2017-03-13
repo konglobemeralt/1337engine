@@ -1,5 +1,6 @@
 package engineTester;
 
+import entities.Camera;
 import entities.Entity;
 import models.RawModel;
 import models.TexturedModel;
@@ -47,12 +48,16 @@ public class MainGameLoop {
 
         Entity entity = new Entity(staticModel, new Vector3f(0, 0, -1), 0, 0, 0, 1);
 
+        Camera camera = new Camera();
+
         while(!Display.isCloseRequested()){
             entity.increaseRotation(0, 1, 0.5f);
             entity.increasePosition(0, 0, -0.01f);
+            camera.move();
             renderer.prepare();
             //Game logic
             shader.start();
+            shader.loadViewMatrix(camera);
             renderer.render(entity, shader);
             shader.stop();
             DisplayManager.updateDisplay();
