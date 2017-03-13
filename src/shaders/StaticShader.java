@@ -11,6 +11,7 @@ public class StaticShader extends ShaderProgram {
     private static final String FRAGMENT_FILE = "src/shaders/fragmentShader";
 
     private int location_transformationMatrix;
+    private int location_projectionMatrix;
 
     public StaticShader(){
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -26,10 +27,15 @@ public class StaticShader extends ShaderProgram {
     @Override
     protected void getAllUniformLocations() {
         location_transformationMatrix = super.getUnifromLocation("transformationMatrix");
+        location_projectionMatrix = super.getUnifromLocation("projectionMatrix");
     }
 
-    public void loadTransformationMatrix(Matrix4f matrix){
-        super.loadMatrix(location_transformationMatrix, matrix);
+    public void loadTransformationMatrix(Matrix4f transformation){
+        super.loadMatrix(location_transformationMatrix, transformation);
+    }
+
+    public void loadProjectionMatrix(Matrix4f projection){
+        super.loadMatrix(location_projectionMatrix, projection);
     }
 }
 
