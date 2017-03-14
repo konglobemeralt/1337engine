@@ -20,7 +20,7 @@ public class DisplayManager {
         try{
             Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.create(new PixelFormat(), attribs);
-            Display.setTitle("1337xXSlayer_GroupXx1337");
+            Display.setTitle("openGl practice");
         }
         catch(LWJGLException e){
             e.printStackTrace();

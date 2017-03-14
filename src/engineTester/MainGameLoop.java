@@ -2,6 +2,7 @@ package engineTester;
 
 import entities.Camera;
 import entities.Entity;
+import entities.*;
 import models.RawModel;
 import models.TexturedModel;
 import org.lwjgl.opengl.Display;
@@ -28,6 +29,7 @@ public class MainGameLoop {
         TexturedModel staticModel = new TexturedModel(model, texture);
 
         Entity entity = new Entity(staticModel, new Vector3f(0, -1.3f, -15), 0, 0, 0, 0.02f);
+        Light light = new Light(new Vector3f(0,0, 33), new Vector3f(1, 1, 0.9f));
 
         Camera camera = new Camera();
 
@@ -37,6 +39,7 @@ public class MainGameLoop {
             renderer.prepare();
             //Game logic
             shader.start();
+            shader.loadLight(light); //TODO: Says cannot access entities.Light but it still works so what is going on?
             shader.loadViewMatrix(camera);
             renderer.render(entity, shader);
             shader.stop();
