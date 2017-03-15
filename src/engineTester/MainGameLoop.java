@@ -11,6 +11,10 @@ import renderEngine.*;
 import shaders.StaticShader;
 import textures.ModelTexture;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /**
  * Created by Jesper on 2017-03-10.
  */
@@ -20,45 +24,56 @@ public class MainGameLoop {
 
         DisplayManager.createDisplay();
         Loader loader = new Loader();
-        StaticShader shader = new StaticShader();
-        Renderer renderer = new Renderer(shader);
+        MasterRenderer renderer = new MasterRenderer();
 
+        List<Entity> models = new ArrayList<Entity>();
+        Random random = new Random();
 
         RawModel model = ObjLoader.loadObjModel("hus", loader);
         ModelTexture texture = new ModelTexture(loader.loadTexture("wall"));
         texture.setShineDamper(10);
         texture.setReflectivity(0.01f);
         TexturedModel staticModel = new TexturedModel(model, texture);
+        for(int i = 0; i < 100; i ++){
+            float x = random.nextFloat() * 200 -50;
+            float y = random.nextFloat() * 200 -50;
+            float z = random.nextFloat() * -400;
+            models.add(new Entity(staticModel, new Vector3f(x, y, z), random.nextFloat() * 180f, random.nextFloat() * 180f, 0f, 0.07f));
+        }
 
-        Entity entity = new Entity(staticModel, new Vector3f(-5, -1.3f, -15), 0, 0, 0, 0.02f);
-        Light light = new Light(new Vector3f(0,0, 33), new Vector3f(1, 1, 0.9f));
-
-        Camera camera = new Camera();
-
-        RawModel dragon = ObjLoader.loadObjModel("dragon", loader);
+        RawModel dragonModel = ObjLoader.loadObjModel("dragon", loader);
         ModelTexture dragonText = new ModelTexture(loader.loadTexture("floor"));
         dragonText.setShineDamper(10);
         dragonText.setReflectivity(1);
-        TexturedModel staticDragon = new TexturedModel(dragon, dragonText);
-        Entity dragonEntity = new Entity(staticDragon, new Vector3f(5, -1.3f, -15), 0, 0, 0, 0.7f);
+        TexturedModel TexturedDragonModel = new TexturedModel(dragonModel, dragonText);
+
+        Light light = new Light(new Vector3f(0,0, 33), new Vector3f(1, 1, 0.9f));
+        Camera camera = new Camera();
+
+        for(int i = 0; i < 100; i ++){
+            float x = random.nextFloat() * 100 -50;
+            float y = random.nextFloat() * 100 -50;
+            float z = random.nextFloat() * -300;
+            models.add(new Entity(TexturedDragonModel, new Vector3f(x, y, z), random.nextFloat() * 180f, random.nextFloat() * 180f, 0f, 1f));
+        }
 
 
         while(!Display.isCloseRequested()){
-            entity.increaseRotation(0, 0.03f, 0);
-            dragonEntity.increaseRotation(0, -0.05f, 0);
             camera.move();
-            renderer.prepare();
             //Game logic
-            shader.start();
-            shader.loadLight(light);
-            shader.loadViewMatrix(camera);
-            renderer.render(entity, shader);
-            renderer.render(dragonEntity, shader);
-            shader.stop();
+
+            for(Entity entity: models){
+                if(entity.getModel().getRawModel().equals(TexturedDragonModel.getRawModel())){
+                    entity.increaseRotation(0.1f, 0.02f, 0.5f);
+                }
+
+                renderer.processEntity(entity);
+            }
+            renderer.render(light, camera);
             DisplayManager.updateDisplay();
         }
 
-        shader.cleanUp();
+        renderer.cleanUp();
         loader.cleanUp();
         DisplayManager.closeDisplay();
 
