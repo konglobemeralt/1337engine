@@ -39,9 +39,26 @@ public class MainGameLoop {
         List<Entity> models = new ArrayList<Entity>();
         Random random = new Random();
 
+        //Grass
+        RawModel grass = ObjLoader.loadObjModel("grass", loader);
+        ModelTexture grassTexture = new ModelTexture(loader.loadTexture("grass"));
+        grassTexture.setShineDamper(10);
+        grassTexture.setReflectivity(0.1f);
+        grassTexture.setUseFakeLighting(true);
+        grassTexture.setHasTransparancy(true);
+        TexturedModel staticGrassModel = new TexturedModel(grass, grassTexture);
+
+        for(int i = 0; i < 350; i ++){
+            float x = random.nextFloat() * 200 -50;
+            float y = random.nextFloat() * 200 -50;
+            float z = random.nextFloat() * -400;
+            models.add(new Entity(staticGrassModel, new Vector3f(x, 0f, z), 0, random.nextFloat() * 360f, 0f, 0.73f));
+        }
+
+
         //Houses
         RawModel model = ObjLoader.loadObjModel("hus", loader);
-        ModelTexture texture = new ModelTexture(loader.loadTexture("wall"));
+        ModelTexture texture = new ModelTexture(loader.loadTexture("wall1"));
         texture.setShineDamper(10);
         texture.setReflectivity(0.01f);
         TexturedModel staticModel = new TexturedModel(model, texture);

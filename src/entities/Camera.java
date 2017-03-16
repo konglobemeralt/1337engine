@@ -35,18 +35,18 @@ public class Camera {
             position.x-=0.2f;
         }
 
-        if(Keyboard.isKeyDown(Keyboard.KEY_Q)){
+        if(Keyboard.isKeyDown(Keyboard.KEY_Z)){
             position.y+=0.2f;
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_E)){
+        if(Keyboard.isKeyDown(Keyboard.KEY_X)){
             position.y-=0.2f;
         }
 
-        if(Keyboard.isKeyDown(Keyboard.KEY_Z)){
+        if(Keyboard.isKeyDown(Keyboard.KEY_Q)){
             yaw -=0.2f;
         }
 
-        if(Keyboard.isKeyDown(Keyboard.KEY_X)){
+        if(Keyboard.isKeyDown(Keyboard.KEY_E)){
             yaw +=0.2f;
         }
 
