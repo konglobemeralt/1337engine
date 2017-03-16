@@ -42,6 +42,14 @@ public class Camera {
             position.y-=0.2f;
         }
 
+        if(Keyboard.isKeyDown(Keyboard.KEY_Z)){
+            yaw -=0.2f;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_X)){
+            yaw +=0.2f;
+        }
+
 
     }
 
