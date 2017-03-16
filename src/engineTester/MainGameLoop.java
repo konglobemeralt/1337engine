@@ -28,13 +28,15 @@ public class MainGameLoop {
         MasterRenderer renderer = new MasterRenderer();
 
         //Camera and light
-        Light light = new Light(new Vector3f(0,22, 33), new Vector3f(1, 1, 0.9f));
+        Light light = new Light(new Vector3f(0,17, 33), new Vector3f(0.6f, 0.7f, 0.7f));
         Camera camera = new Camera();
         camera.setPosition(new Vector3f(0, 1, 0));
 
         //terrain
-        Terrain terrain00 = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("floor")));
-        Terrain terrain10 = new Terrain(-1, -1, loader, new ModelTexture(loader.loadTexture("floor")));
+        Terrain terrain00 = new Terrain(0, 0, loader, new ModelTexture(loader.loadTexture("floor")));
+        Terrain terrain01 = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("floor")));
+        Terrain terrain10 = new Terrain(-1, 0, loader, new ModelTexture(loader.loadTexture("floor")));
+        Terrain terrain11 = new Terrain(-1, -1, loader, new ModelTexture(loader.loadTexture("floor")));
 
         List<Entity> models = new ArrayList<Entity>();
         Random random = new Random();
@@ -63,10 +65,10 @@ public class MainGameLoop {
         texture.setReflectivity(0.01f);
         TexturedModel staticModel = new TexturedModel(model, texture);
 
-        for(int i = 0; i < 250; i ++){
-            float x = random.nextFloat() * 200 -50;
-            float y = random.nextFloat() * 200 -50;
-            float z = random.nextFloat() * -400;
+        for(int i = 0; i < 950; i ++){
+            float x = random.nextFloat() * 400 -50;
+            float y = random.nextFloat() * 400 -50;
+            float z = random.nextFloat() * -500;
             models.add(new Entity(staticModel, new Vector3f(x, -0.2f, z), 0, random.nextFloat() * 360f, 0f, 0.04f));
         }
 
@@ -90,7 +92,9 @@ public class MainGameLoop {
             //Game logic
 
             renderer.processTerrain(terrain00);
+            renderer.processTerrain(terrain01);
             renderer.processTerrain(terrain10);
+            renderer.processTerrain(terrain11);
 
             for(Entity entity: models){
                 if(entity.getModel().getRawModel().equals(TexturedDragonModel.getRawModel())){
