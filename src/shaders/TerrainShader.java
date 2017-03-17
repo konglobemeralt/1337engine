@@ -3,6 +3,7 @@ package shaders;
 import entities.Camera;
 import entities.Light;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 import toolbox.Maths;
 
 /**
@@ -21,6 +22,14 @@ public class TerrainShader extends ShaderProgram {
 
     private int location_shineDamper;
     private int location_reflectivity;
+
+    private int location_skyColour;
+
+    private int location_backgroundTexture;
+    private int location_rTexture;
+    private int location_gTexture;
+    private int location_bTexture;
+    private int location_blendMap;
 
 
     public TerrainShader(){
@@ -44,6 +53,20 @@ public class TerrainShader extends ShaderProgram {
         location_lightColour = super.getUnifromLocation("lightColour");
         location_shineDamper = super.getUnifromLocation("shineDamper");
         location_reflectivity= super.getUnifromLocation("reflectivity");
+        location_skyColour = super.getUnifromLocation("skyColour");
+        location_backgroundTexture = super.getUnifromLocation("backgroundTexture");
+        location_rTexture = super.getUnifromLocation("rTexture");
+        location_gTexture = super.getUnifromLocation("gTexture");
+        location_bTexture = super.getUnifromLocation("bTexture");
+        location_blendMap = super.getUnifromLocation("blendMap");
+    }
+
+    public void connectTexturesUnits(){
+        super.loadInt(location_backgroundTexture, 0);
+        super.loadInt(location_rTexture, 1);
+        super.loadInt(location_gTexture, 2);
+        super.loadInt(location_bTexture, 3);
+        super.loadInt(location_blendMap, 4);
     }
 
     public void loadShineVariables(float damper, float reflectivity){
@@ -55,6 +78,10 @@ public class TerrainShader extends ShaderProgram {
     public void loadLight(Light light){
         super.loadVector(location_lightPosition, light.getPosition());
         super.loadVector(location_lightColour, light.getColour());
+    }
+
+    public void loadSkyColour(float r, float g, float b){
+        super.loadVector(location_skyColour, new Vector3f(r, g, b));
     }
 
     public void loadTransformationMatrix(Matrix4f transformation){

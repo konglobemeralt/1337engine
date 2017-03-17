@@ -11,6 +11,8 @@ import renderEngine.*;
 import shaders.StaticShader;
 import terrains.Terrain;
 import textures.ModelTexture;
+import textures.TerrainTexture;
+import textures.TerrainTexturePack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +30,24 @@ public class MainGameLoop {
         MasterRenderer renderer = new MasterRenderer();
 
         //Camera and light
-        Light light = new Light(new Vector3f(0,17, 33), new Vector3f(0.6f, 0.7f, 0.7f));
+        Light light = new Light(new Vector3f(0,17, 33), new Vector3f(0.8f, 0.7f, 0.7f));
         Camera camera = new Camera();
         camera.setPosition(new Vector3f(0, 1, 0));
 
         //terrain
-        Terrain terrain00 = new Terrain(0, 0, loader, new ModelTexture(loader.loadTexture("floor")));
-        Terrain terrain01 = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("floor")));
-        Terrain terrain10 = new Terrain(-1, 0, loader, new ModelTexture(loader.loadTexture("floor")));
-        Terrain terrain11 = new Terrain(-1, -1, loader, new ModelTexture(loader.loadTexture("floor")));
+        TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("grassGround"));
+        TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("mud"));
+        TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("wall1"));
+        TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("floor"));
+
+        TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
+        TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
+
+
+        Terrain terrain00 = new Terrain(0, 0, loader, texturePack, blendMap);
+        Terrain terrain01 = new Terrain(0, -1, loader, texturePack, blendMap);
+        Terrain terrain10 = new Terrain(-1, 0, loader, texturePack, blendMap);
+        Terrain terrain11 = new Terrain(-1, -1, loader, texturePack, blendMap);
 
         List<Entity> models = new ArrayList<Entity>();
         Random random = new Random();
@@ -50,7 +61,7 @@ public class MainGameLoop {
         grassTexture.setHasTransparancy(true);
         TexturedModel staticGrassModel = new TexturedModel(grass, grassTexture);
 
-        for(int i = 0; i < 350; i ++){
+        for(int i = 0; i < 500; i ++){
             float x = random.nextFloat() * 200 -50;
             float y = random.nextFloat() * 200 -50;
             float z = random.nextFloat() * -400;
@@ -65,7 +76,7 @@ public class MainGameLoop {
         texture.setReflectivity(0.01f);
         TexturedModel staticModel = new TexturedModel(model, texture);
 
-        for(int i = 0; i < 950; i ++){
+        for(int i = 0; i < 100; i ++){
             float x = random.nextFloat() * 400 -50;
             float y = random.nextFloat() * 400 -50;
             float z = random.nextFloat() * -500;
