@@ -8,7 +8,6 @@ import models.TexturedModel;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.*;
-import shaders.StaticShader;
 import terrains.Terrain;
 import textures.ModelTexture;
 import textures.TerrainTexture;
@@ -32,7 +31,9 @@ public class MainGameLoop {
         //Camera and light
         Light light = new Light(new Vector3f(0,17, 33), new Vector3f(0.8f, 0.7f, 0.7f));
         Camera camera = new Camera();
-        camera.setPosition(new Vector3f(0, 1, 0));
+        camera.setPosition(new Vector3f(0, 15, 0));
+        camera.setPitch(15);
+
 
         //terrain
         TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("grassGround"));
@@ -61,7 +62,7 @@ public class MainGameLoop {
         grassTexture.setHasTransparancy(true);
         TexturedModel staticGrassModel = new TexturedModel(grass, grassTexture);
 
-        for(int i = 0; i < 500; i ++){
+        for(int i = 0; i < 300; i ++){
             float x = random.nextFloat() * 200 -50;
             float y = random.nextFloat() * 200 -50;
             float z = random.nextFloat() * -400;
@@ -97,11 +98,20 @@ public class MainGameLoop {
             models.add(new Entity(TexturedDragonModel, new Vector3f(x, y, z), random.nextFloat() * 180f, random.nextFloat() * 180f, 0f, 1f));
         }
 
+        //Player
+        RawModel bunnyModel =  ObjLoader.loadObjModel("bunny", loader);
+        ModelTexture bunnyText = new ModelTexture(loader.loadTexture("mud"));
+        TexturedModel texturedBunnyModel = new TexturedModel(bunnyModel, bunnyText);
+        Player player = new Player(texturedBunnyModel, new Vector3f(0, 0,0), 0, 180, 0, 1);
 
         while(!Display.isCloseRequested()){
             camera.move();
-            //Game logic
+            player.move();
 
+            renderer.processEntity(player);
+            renderer.processEntity(player);
+
+            //Game logic
             renderer.processTerrain(terrain00);
             renderer.processTerrain(terrain01);
             renderer.processTerrain(terrain10);
@@ -111,9 +121,10 @@ public class MainGameLoop {
                 if(entity.getModel().getRawModel().equals(TexturedDragonModel.getRawModel())){
                     entity.increaseRotation(0.1f, 0.02f, 0.5f);
                 }
-
                 renderer.processEntity(entity);
             }
+
+
             renderer.render(light, camera);
             DisplayManager.updateDisplay();
         }
