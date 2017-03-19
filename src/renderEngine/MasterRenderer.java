@@ -26,8 +26,8 @@ public class MasterRenderer {
     private static final float FAR_PLANE = 1000f;
 
     private static final float RED = 1.0f;
-    private static final float GREEN = 0;
-    private static final float BLUE = 0;
+    private static final float GREEN = 1;
+    private static final float BLUE = 1;
 
     private Matrix4f projectionMatrix;
 
@@ -71,6 +71,7 @@ public class MasterRenderer {
         entityRenderer.render(entities);
         shader.stop();
         terrainShader.start();
+        terrainShader.loadSkyColour(RED, GREEN, BLUE);
         terrainShader.loadLight(sun);
         terrainShader.loadViewMatrix(camera);
         terrainRenderer.render(terrains);

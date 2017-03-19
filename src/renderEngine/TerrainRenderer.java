@@ -36,8 +36,6 @@ public class TerrainRenderer {
         for(Terrain terrain:terrains){
             prepareTerrain(terrain);
             loadModelMatrix(terrain);
-            //temp fix cause tenta snart
-            shader.loadSkyColour(1.0f, 0.0f, 0.0f);
             GL11.glDrawElements(GL11.GL_TRIANGLES, terrain.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
             unbindTexturedModel();
         }

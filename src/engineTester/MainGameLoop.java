@@ -88,8 +88,8 @@ public class MainGameLoop {
         TexturedModel TexturedDragonModel = new TexturedModel(dragonModel, dragonText);
 
         for(int i = 0; i < 100; i ++){
-            float x = random.nextFloat() * 100 -50;
-            float y = random.nextFloat() * 100 -50;
+            float x = random.nextFloat() * 200 -50;
+            float y = random.nextFloat() * 200 + 5;
             float z = random.nextFloat() * -300;
             models.add(new Entity(TexturedDragonModel, new Vector3f(x, y, z), random.nextFloat() * 180f, random.nextFloat() * 180f, 0f, 1f));
         }
