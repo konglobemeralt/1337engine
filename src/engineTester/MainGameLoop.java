@@ -28,11 +28,7 @@ public class MainGameLoop {
         Loader loader = new Loader();
         MasterRenderer renderer = new MasterRenderer();
 
-        //Camera and light
-        Light light = new Light(new Vector3f(0,17, 33), new Vector3f(0.8f, 0.7f, 0.7f));
-        Camera camera = new Camera();
-        camera.setPosition(new Vector3f(0, 15, 0));
-        camera.setPitch(15);
+
 
 
         //terrain
@@ -102,7 +98,13 @@ public class MainGameLoop {
         RawModel bunnyModel =  ObjLoader.loadObjModel("bunny", loader);
         ModelTexture bunnyText = new ModelTexture(loader.loadTexture("mud"));
         TexturedModel texturedBunnyModel = new TexturedModel(bunnyModel, bunnyText);
-        Player player = new Player(texturedBunnyModel, new Vector3f(0, 0,0), 0, 180, 0, 1);
+        Player player = new Player(texturedBunnyModel, new Vector3f(0, 0,0), 0, 180, 0, 0.3f);
+
+        //Camera and light
+        Light light = new Light(new Vector3f(0,17, 33), new Vector3f(0.8f, 0.7f, 0.7f));
+        Camera camera = new Camera(player);
+        camera.setPosition(new Vector3f(0, 15, 0));
+        camera.setPitch(15);
 
         while(!Display.isCloseRequested()){
             camera.move();
