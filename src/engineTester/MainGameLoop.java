@@ -41,10 +41,10 @@ public class MainGameLoop {
         TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
 
 
-        Terrain terrain00 = new Terrain(0, 0, loader, texturePack, blendMap);
-        Terrain terrain01 = new Terrain(0, -1, loader, texturePack, blendMap);
-        Terrain terrain10 = new Terrain(-1, 0, loader, texturePack, blendMap);
-        Terrain terrain11 = new Terrain(-1, -1, loader, texturePack, blendMap);
+        Terrain terrain00 = new Terrain(0, 0, loader, texturePack, blendMap, "heightmap");
+        Terrain terrain01 = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap");
+        Terrain terrain10 = new Terrain(-1, 0, loader, texturePack, blendMap, "heightmap");
+        Terrain terrain11 = new Terrain(-1, -1, loader, texturePack, blendMap, "heightmap");
 
         List<Entity> models = new ArrayList<Entity>();
         Random random = new Random();
