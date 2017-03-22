@@ -73,7 +73,7 @@ public class MainGameLoop {
         texture.setReflectivity(0.01f);
         TexturedModel staticModel = new TexturedModel(model, texture);
 
-        for(int i = 0; i < 100; i ++){
+        for(int i = 0; i < 200; i ++){
             float x = random.nextFloat() * 200 -50;
             float z = random.nextFloat() * -400;
             float y = terrain01.getHeightOfTerrain(x, z);
@@ -87,7 +87,7 @@ public class MainGameLoop {
         dragonText.setReflectivity(1);
         TexturedModel TexturedDragonModel = new TexturedModel(dragonModel, dragonText);
 
-        for(int i = 0; i < 100; i ++){
+        for(int i = 0; i < 200; i ++){
             float x = random.nextFloat() * 200 -50;
             float y = random.nextFloat() * 200 + 5;
             float z = random.nextFloat() * -300;
