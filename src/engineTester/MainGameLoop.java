@@ -60,9 +60,9 @@ public class MainGameLoop {
 
         for(int i = 0; i < 300; i ++){
             float x = random.nextFloat() * 200 -50;
-            float y = random.nextFloat() * 200 -50;
             float z = random.nextFloat() * -400;
-            models.add(new Entity(staticGrassModel, new Vector3f(x, 0f, z), 0, random.nextFloat() * 360f, 0f, 0.73f));
+            float y = terrain01.getHeightOfTerrain(x, z);
+            models.add(new Entity(staticGrassModel, new Vector3f(x, y, z), 0, random.nextFloat() * 360f, 0f, 0.73f));
         }
 
 
@@ -74,10 +74,10 @@ public class MainGameLoop {
         TexturedModel staticModel = new TexturedModel(model, texture);
 
         for(int i = 0; i < 100; i ++){
-            float x = random.nextFloat() * 400 -50;
-            float y = random.nextFloat() * 400 -50;
-            float z = random.nextFloat() * -500;
-            models.add(new Entity(staticModel, new Vector3f(x, -0.2f, z), 0, random.nextFloat() * 360f, 0f, 0.04f));
+            float x = random.nextFloat() * 200 -50;
+            float z = random.nextFloat() * -400;
+            float y = terrain01.getHeightOfTerrain(x, z);
+            models.add(new Entity(staticModel, new Vector3f(x, y-0.2f, z), 0, random.nextFloat() * 360f, 0f, 0.04f));
         }
 
         //Dragons
@@ -108,7 +108,7 @@ public class MainGameLoop {
 
         while(!Display.isCloseRequested()){
             camera.move();
-            player.move();
+            player.move(terrain01);
 
             renderer.processEntity(player);
             renderer.processEntity(player);
