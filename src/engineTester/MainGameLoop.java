@@ -49,6 +49,24 @@ public class MainGameLoop {
         List<Entity> models = new ArrayList<Entity>();
         Random random = new Random();
 
+
+        //Ferns
+        RawModel fern = ObjLoader.loadObjModel("fern", loader);
+        ModelTexture fernTexture = new ModelTexture(loader.loadTexture("fern"));
+        fernTexture.setNumberOfRows(2);
+        fernTexture.setShineDamper(10);
+        fernTexture.setReflectivity(0.1f);
+        fernTexture.setUseFakeLighting(true);
+        fernTexture.setHasTransparancy(true);
+        TexturedModel staticFernModel = new TexturedModel(fern, fernTexture);
+
+        for(int i = 0; i < 200; i ++){
+            float x = random.nextFloat() * 200 -50;
+            float z = random.nextFloat() * -400;
+            float y = terrain01.getHeightOfTerrain(x, z);
+            models.add(new Entity(staticFernModel, random.nextInt(4), new Vector3f(x, y, z), 0, random.nextFloat() * 360f, 0f, 0.73f));
+        }
+
         //Grass
         RawModel grass = ObjLoader.loadObjModel("grass", loader);
         ModelTexture grassTexture = new ModelTexture(loader.loadTexture("grass"));
@@ -58,13 +76,12 @@ public class MainGameLoop {
         grassTexture.setHasTransparancy(true);
         TexturedModel staticGrassModel = new TexturedModel(grass, grassTexture);
 
-        for(int i = 0; i < 300; i ++){
+        for(int i = 0; i < 123; i ++){
             float x = random.nextFloat() * 200 -50;
             float z = random.nextFloat() * -400;
             float y = terrain01.getHeightOfTerrain(x, z);
             models.add(new Entity(staticGrassModel, new Vector3f(x, y, z), 0, random.nextFloat() * 360f, 0f, 0.73f));
         }
-
 
         //Houses
         RawModel model = ObjLoader.loadObjModel("hus", loader);
@@ -73,7 +90,7 @@ public class MainGameLoop {
         texture.setReflectivity(0.01f);
         TexturedModel staticModel = new TexturedModel(model, texture);
 
-        for(int i = 0; i < 200; i ++){
+        for(int i = 0; i < 1; i ++){
             float x = random.nextFloat() * 200 -50;
             float z = random.nextFloat() * -400;
             float y = terrain01.getHeightOfTerrain(x, z);
@@ -87,7 +104,7 @@ public class MainGameLoop {
         dragonText.setReflectivity(1);
         TexturedModel TexturedDragonModel = new TexturedModel(dragonModel, dragonText);
 
-        for(int i = 0; i < 200; i ++){
+        for(int i = 0; i < 2; i ++){
             float x = random.nextFloat() * 200 -50;
             float y = random.nextFloat() * 200 + 5;
             float z = random.nextFloat() * -300;
