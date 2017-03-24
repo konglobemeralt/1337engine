@@ -49,8 +49,8 @@ public class StaticShader extends ShaderProgram {
         location_reflectivity = super.getUnifromLocation("reflectivity");
         location_useFakeLighting = super.getUnifromLocation("useFakeLighting");
         location_skyColour = super.getUnifromLocation("skyColour");
-        location_skyColour = super.getUnifromLocation("numberOfRows");
-        location_skyColour = super.getUnifromLocation("offset");
+        location_numberOfRows = super.getUnifromLocation("numberOfRows");
+        location_offset = super.getUnifromLocation("offset");
     }
 
     public void loadNumberOfRows(int numberOfRows){
