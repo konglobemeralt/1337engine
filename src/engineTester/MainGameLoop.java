@@ -3,9 +3,12 @@ package engineTester;
 import entities.Camera;
 import entities.Entity;
 import entities.*;
+import guis.GuiRenderer;
+import guis.GuiTexture;
 import models.RawModel;
 import models.TexturedModel;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.*;
 import terrains.Terrain;
@@ -28,8 +31,11 @@ public class MainGameLoop {
         Loader loader = new Loader();
         MasterRenderer renderer = new MasterRenderer();
 
+        List<GuiTexture> guis = new ArrayList<GuiTexture>();
+        GuiTexture gui = new GuiTexture(loader.loadTexture("gui"), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
+        guis.add(gui);
 
-
+        GuiRenderer guiRenderer = new GuiRenderer(loader);
 
         //terrain
         TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("grassGround"));
@@ -142,11 +148,12 @@ public class MainGameLoop {
                 }
                 renderer.processEntity(entity);
             }
-
-
             renderer.render(light, camera);
+            guiRenderer.render(guis);
+
             DisplayManager.updateDisplay();
         }
+        guiRenderer.cleanUp();
         renderer.cleanUp();
         loader.cleanUp();
         DisplayManager.closeDisplay();
