@@ -124,7 +124,17 @@ public class MainGameLoop {
         Player player = new Player(texturedBunnyModel, new Vector3f(0, 0,0), 0, 180, 0, 0.3f);
 
         //Camera and light
-        Light light = new Light(new Vector3f(0,17, 33), new Vector3f(0.8f, 0.7f, 0.7f));
+        List<Light> lights = new ArrayList<Light>();
+        Light light1 = new Light(new Vector3f(0,17, 33), new Vector3f(0.8f, 0.1f, 0.7f));
+        Light light2 = new Light(new Vector3f(0,4, 13), new Vector3f(0.1f, 0.7f, 0.6f));
+        Light light3 = new Light(new Vector3f(32,12, 33), new Vector3f(0.8f, 0.2f, 0.2f));
+        Light light4 = new Light(new Vector3f(-21,7, 00), new Vector3f(0.8f, 0.0f, 0.2f));
+        lights.add(light1);
+        lights.add(light2);
+        lights.add(light3);
+        lights.add(light4);
+
+
         Camera camera = new Camera(player);
         camera.setPosition(new Vector3f(0, 15, 0));
         camera.setPitch(15);
@@ -148,7 +158,7 @@ public class MainGameLoop {
                 }
                 renderer.processEntity(entity);
             }
-            renderer.render(light, camera);
+            renderer.render(lights, camera);
             guiRenderer.render(guis);
 
             DisplayManager.updateDisplay();

@@ -6,10 +6,13 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import toolbox.Maths;
 
+import java.util.List;
+
 /**
  * Created by Jesper on 2017-03-16.
  */
 public class TerrainShader extends ShaderProgram {
+    private static final int MAX_LIGHTS = 4;
     private static final String VERTEX_FILE = "src/shaders/terrainVertexShader";
     private static final String FRAGMENT_FILE = "src/shaders/terrainFragmentShader";
 
@@ -17,8 +20,8 @@ public class TerrainShader extends ShaderProgram {
     private int location_projectionMatrix;
     private int location_viewMatrix;
 
-    private int location_lightPosition;
-    private int location_lightColour;
+    private int location_lightPosition[];
+    private int location_lightColour[];
 
     private int location_shineDamper;
     private int location_reflectivity;
@@ -49,8 +52,6 @@ public class TerrainShader extends ShaderProgram {
         location_transformationMatrix = super.getUnifromLocation("transformationMatrix");
         location_projectionMatrix = super.getUnifromLocation("projectionMatrix");
         location_viewMatrix = super.getUnifromLocation("viewMatrix");
-        location_lightPosition = super.getUnifromLocation("lightPosition");
-        location_lightColour = super.getUnifromLocation("lightColour");
         location_shineDamper = super.getUnifromLocation("shineDamper");
         location_reflectivity= super.getUnifromLocation("reflectivity");
         location_skyColour = super.getUnifromLocation("skyColour");
@@ -59,6 +60,14 @@ public class TerrainShader extends ShaderProgram {
         location_gTexture = super.getUnifromLocation("gTexture");
         location_bTexture = super.getUnifromLocation("bTexture");
         location_blendMap = super.getUnifromLocation("blendMap");
+
+        location_lightPosition = new int[MAX_LIGHTS];
+        location_lightColour = new int[MAX_LIGHTS];
+
+        for(int i=0;i<MAX_LIGHTS;i++){
+            location_lightPosition[i] = super.getUnifromLocation("lightPosition[" + i + "]");
+            location_lightColour[i] = super.getUnifromLocation("lightColour[" + i + "]");
+        }
     }
 
     public void connectTexturesUnits(){
@@ -75,9 +84,16 @@ public class TerrainShader extends ShaderProgram {
 
     }
 
-    public void loadLight(Light light){
-        super.loadVector(location_lightPosition, light.getPosition());
-        super.loadVector(location_lightColour, light.getColour());
+    public void loadLights(List<Light> lights){
+        for(int i=0;i<MAX_LIGHTS;i++){
+            if(i<lights.size()){
+                super.loadVector(location_lightPosition[i], lights.get(i).getPosition());
+                super.loadVector(location_lightColour[i], lights.get(i).getColour());
+            }else{
+                super.loadVector(location_lightPosition[i], new Vector3f(0, 0, 0));
+                super.loadVector(location_lightColour[i], new Vector3f(0, 0, 0));
+            }
+        }
     }
 
     public void loadSkyColour(float r, float g, float b){
