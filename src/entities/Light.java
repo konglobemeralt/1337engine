@@ -9,10 +9,25 @@ public class Light {
 
     private Vector3f position;
     private Vector3f colour;
+    private Vector3f attenutation = new Vector3f(1, 0, 0);
 
     public Light(Vector3f position, Vector3f colour){
         this.position = position;
         this.colour = colour;
+    }
+
+    public Light(Vector3f position, Vector3f colour, Vector3f attenutation){
+        this.position = position;
+        this.colour = colour;
+        this.attenutation = attenutation;
+    }
+
+    public Vector3f getAttenutation() {
+        return attenutation;
+    }
+
+    public void setAttenutation(Vector3f attenutation) {
+        this.attenutation = attenutation;
     }
 
     public Vector3f getPosition() {
