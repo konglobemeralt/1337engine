@@ -1,14 +1,17 @@
 package renderEngine;
 
+import de.matthiasmann.twl.utils.PNGDecoder;
 import models.RawModel;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.*;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
+import textures.TextureData;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.*;
@@ -100,6 +103,30 @@ public class Loader {
         int textureID = texture.getTextureID();
         textures.add(textureID);
         return textureID;
+    }
+
+    private TextureData decodeTextureFile(String fileName){
+        int width = 0;
+        int height = 0;
+        ByteBuffer buffer = null;
+        try{
+            FileInputStream in = new FileInputStream(fileName);
+            PNGDecoder decoder = new PNGDecoder(in);
+            width = decoder.getWidth();
+            height = decoder.getHeight();
+            buffer = ByteBuffer.allocateDirect(4 * width * height);
+            decoder.decode(buffer, width * 4, PNGDecoder.Format.RGBA);
+            buffer.flip();
+            in.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            System.err.println("Tried to load " + fileName + ", did not work...");
+            System.exit(-1);
+        }
+        return new TextureData(buffer, width, height);
+
+
+
     }
 
     public void cleanUp() {
