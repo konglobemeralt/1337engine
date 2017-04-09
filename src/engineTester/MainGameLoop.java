@@ -29,7 +29,7 @@ public class MainGameLoop {
 
         DisplayManager.createDisplay();
         Loader loader = new Loader();
-        MasterRenderer renderer = new MasterRenderer();
+        MasterRenderer renderer = new MasterRenderer(loader);
 
         List<GuiTexture> guis = new ArrayList<GuiTexture>();
         GuiTexture gui = new GuiTexture(loader.loadTexture("gui"), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
@@ -125,10 +125,10 @@ public class MainGameLoop {
 
         //Camera and light
         List<Light> lights = new ArrayList<Light>();
-        Light light1 = new Light(new Vector3f(0,1200, -6500), new Vector3f(0.4f, 0.4f, 0.4f));
-        Light light2 = new Light(new Vector3f(0,4, 13), new Vector3f(1.1f, 0.1f, 0.6f), new Vector3f(0.1f, 0.01f, 0.002f));
-        Light light3 = new Light(new Vector3f(46,5, 40), new Vector3f(0.0f, 0.0f, 1.0f), new Vector3f(0.1f, 0.01f, 0.002f));
-        Light light4 = new Light(new Vector3f(23,7, 45), new Vector3f(0.0f, 1.0f, 0.0f), new Vector3f(0.1f, 0.01f, 0.002f));
+        Light light1 = new Light(new Vector3f(0,1200, 6500), new Vector3f(0.4f, 0.45f, 0.46f));
+        Light light2 = new Light(new Vector3f(0,4, -100), new Vector3f(1.1f, 0.1f, 0.6f), new Vector3f(0.1f, 0.01f, 0.002f));
+        Light light3 = new Light(new Vector3f(46,5, -159), new Vector3f(0.0f, 0.0f, 1.0f), new Vector3f(0.1f, 0.01f, 0.002f));
+        Light light4 = new Light(new Vector3f(23,7, -200), new Vector3f(0.0f, 1.0f, 0.0f), new Vector3f(0.1f, 0.01f, 0.002f));
         lights.add(light1);
         lights.add(light2);
         lights.add(light3);

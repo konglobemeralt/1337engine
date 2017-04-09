@@ -78,11 +78,11 @@ public class Loader {
         return buffer;
     }
 
-    public RawModel loadToVAO(float[] positions){
+    public RawModel loadToVAO(float[] positions, int dimensions){
         int vaoID = createVAO();
-        this.storeDataInAttributeList(0, 2, positions);
+        this.storeDataInAttributeList(0, dimensions, positions);
         undbindVAO();
-        return new RawModel(vaoID, positions.length/2);
+        return new RawModel(vaoID, positions.length/dimensions);
 
 
     }
@@ -105,11 +105,27 @@ public class Loader {
         return textureID;
     }
 
-    private TextureData decodeTextureFile(String fileName){
+    public int loadCubeMap(String [] textureFiles){
+        int texID = GL11.glGenTextures();
+        GL13.glActiveTexture(GL13.GL_TEXTURE0);
+        GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, texID);
+
+        for(int i=0; i<textureFiles.length; i++){
+            TextureData data = decodeTextureFile("res/textures/" + textureFiles[i] + ".png");
+            GL11.glTexImage2D(GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL11.GL_RGBA, data.getWidth(), data.getHeight(), 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, data.getBuffer());
+
+        }
+        GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+        GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+        textures.add(texID);
+        return texID;
+    }
+
+    private TextureData decodeTextureFile(String fileName) {
         int width = 0;
         int height = 0;
         ByteBuffer buffer = null;
-        try{
+        try {
             FileInputStream in = new FileInputStream(fileName);
             PNGDecoder decoder = new PNGDecoder(in);
             width = decoder.getWidth();
@@ -124,9 +140,6 @@ public class Loader {
             System.exit(-1);
         }
         return new TextureData(buffer, width, height);
-
-
-
     }
 
     public void cleanUp() {
