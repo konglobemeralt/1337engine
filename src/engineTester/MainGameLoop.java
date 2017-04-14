@@ -15,6 +15,7 @@ import terrains.Terrain;
 import textures.ModelTexture;
 import textures.TerrainTexture;
 import textures.TerrainTexturePack;
+import toolbox.MousePicker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,9 +144,15 @@ public class MainGameLoop {
         camera.setPosition(new Vector3f(0, 15, 0));
         camera.setPitch(15);
 
+        MousePicker mousePicker = new MousePicker(camera, renderer.getProjectionMatrix());
+
+
         while(!Display.isCloseRequested()){
             camera.move();
             player.move(terrain01);
+
+            mousePicker.update();
+            System.out.println(mousePicker.getCurrentRay());
 
             renderer.processEntity(player);
             renderer.processEntity(player);
